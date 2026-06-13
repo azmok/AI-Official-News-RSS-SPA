@@ -1,0 +1,6 @@
+{
+  "name": "AI Blog Update Notifier",
+  "description": "An elegant single-user developer blog update monitoring system with automated RSS discovery, custom site scrapers, and unified digest emails.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

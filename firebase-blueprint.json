@@ -1,0 +1,88 @@
+{
+  "entities": {
+    "Source": {
+      "title": "Blog Source",
+      "description": "An AI developer blog or news page to be monitored.",
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Human-friendly name of the blog source"
+        },
+        "type": {
+          "type": "string",
+          "enum": ["rss", "sitemap", "scrape"],
+          "description": "Method of update detection"
+        },
+        "pageUrl": {
+          "type": "string",
+          "format": "uri",
+          "description": "URL of the main blog or news page"
+        },
+        "feedUrl": {
+          "type": "string",
+          "format": "uri",
+          "description": "URL of the RSS feed or XML Sitemap (if applicable)"
+        },
+        "selector": {
+          "type": "string",
+          "description": "CSS selector to extract links when scraping"
+        },
+        "enabled": {
+          "type": "boolean",
+          "description": "Whether checking is active for this source"
+        },
+        "consecutiveEmptyCount": {
+          "type": "integer",
+          "description": "Number of consecutive checking attempts returning zero items"
+        },
+        "lastCheckedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Timestamp of the last analysis session"
+        },
+        "lastError": {
+          "type": "string",
+          "description": "Error message of the last check if it failed"
+        }
+      },
+      "required": ["name", "type", "pageUrl", "enabled"]
+    },
+    "SeenArticle": {
+      "title": "Seen Article",
+      "description": "A cache of successfully detected articles to avoid duplicate notifications.",
+      "type": "object",
+      "properties": {
+        "sourceId": {
+          "type": "string",
+          "description": "ID of the parent Source resource"
+        },
+        "url": {
+          "type": "string",
+          "format": "uri",
+          "description": "Normalized article URL"
+        },
+        "title": {
+          "type": "string",
+          "description": "Article headline or title text"
+        },
+        "firstSeenAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Timestamp when this article was first indexed"
+        }
+      },
+      "required": ["sourceId", "url", "title", "firstSeenAt"]
+    }
+  },
+  "firestore": {
+    "sources": {
+      "schema": "Source",
+      "description": "Monitored AI blog sources list."
+    },
+    "seen_articles": {
+      "schema": "SeenArticle",
+      "description": "Database of articles that have already been discovered and parsed."
+    }
+  }
+}
